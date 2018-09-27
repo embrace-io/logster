@@ -14,15 +14,15 @@ class DogstatsdOutput(LogsterOutput):
 
     def __init__(self, parser, options, logger):
         super(DogstatsdOutput, self).__init__(parser, options, logger)
-        if not options.statsd_host:
+        if not options.dogstatsd_host:
             parser.print_help()
             parser.error("You must supply --dogstatsd-host when using 'dogstatsd' as an output type.")
-        self.statsd_host = options.statsd_host
+        self.dogstatsd_host = options.dogstatsd_host
 
 
     def submit(self, metrics):
         if (not self.dry_run):
-            host = self.statsd_host.split(':')
+            host = self.dogstatsd_host.split(':')
             host[0] = socket.gethostbyname(host[0])
 
         for metric in metrics:
@@ -39,4 +39,4 @@ class DogstatsdOutput(LogsterOutput):
                 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                 udp_sock.sendto(metric_string.encode('ascii'), (host[0], int(host[1])))
             else:
-                print("%s %s" % (self.statsd_host, metric_string))
+                print("%s %s" % (self.dogstatsd_host, metric_string))
