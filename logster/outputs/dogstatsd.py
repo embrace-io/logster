@@ -33,6 +33,8 @@ class DogstatsdOutput(LogsterOutput):
 
             if len(metric.tags) > 0:
                 metric_tags = ','.join(metric.tags)
+                # strip anywhite space
+                metric_tags = ''.join(metric_tags.split())
                 self.logger.debug("Dogstatsd tags: {}".format(metric_tags))
                 metric_tags = '|#' + metric_tags
 
