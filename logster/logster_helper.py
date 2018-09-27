@@ -34,7 +34,8 @@ class MetricObject(object):
 
         if tags is None:
             self.tags = []
-        self.tags = tags
+        else:
+            self.tags = tags
 
 
 class LogsterParser(object):

@@ -29,11 +29,16 @@ class DogstatsdOutput(LogsterOutput):
             metric_name = self.get_metric_name(metric)
 
             # parse dogstatsd tags
-            metric_tags = ','.join(metric.tags)
-            self.logger.debug("Dogstatsd tags: {}".format(metric_tags))
+            metric_tags = ''
 
-            metric_string = "%s:%s|%s|#%s" % (metric_name, metric.value, metric.metric_type, metric_tags)
-            self.logger.debug("Submitting statsd metric: %s" % metric_string)
+            if len(metric.tags) > 0:
+                metric_tags = ','.join(metric.tags)
+                self.logger.debug("Dogstatsd tags: {}".format(metric_tags))
+                metric_tags = '|#' + metric_tags
+
+            metric_string = "%s:%s|%s%s" % (metric_name, metric.value, metric.metric_type, metric_tags)
+
+            self.logger.debug("Submitting dogstatsd metric: %s" % metric_string)
 
             if (not self.dry_run):
                 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
