@@ -13,7 +13,7 @@ class DogstatsdOutput(LogsterOutput):
 
 
     def __init__(self, parser, options, logger):
-        super(StatsdOutput, self).__init__(parser, options, logger)
+        super(DogstatsdOutput, self).__init__(parser, options, logger)
         if not options.statsd_host:
             parser.print_help()
             parser.error("You must supply --dogstatsd-host when using 'dogstatsd' as an output type.")
