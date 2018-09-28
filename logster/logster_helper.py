@@ -4,17 +4,17 @@
 ###  Copyright 2011, Etsy, Inc.
 ###
 ###  This file is part of Logster.
-###  
+###
 ###  Logster is free software: you can redistribute it and/or modify
 ###  it under the terms of the GNU General Public License as published by
 ###  the Free Software Foundation, either version 3 of the License, or
 ###  (at your option) any later version.
-###  
+###
 ###  Logster is distributed in the hope that it will be useful,
 ###  but WITHOUT ANY WARRANTY; without even the implied warranty of
 ###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ###  GNU General Public License for more details.
-###  
+###
 ###  You should have received a copy of the GNU General Public License
 ###  along with Logster. If not, see <http://www.gnu.org/licenses/>.
 ###
@@ -24,13 +24,15 @@ from time import time
 
 class MetricObject(object):
     """General representation of a metric that can be used in many contexts"""
-    def __init__(self, name, value, units='', type='float', timestamp=int(time()), metric_type='g'):
+    def __init__(self, name, value, units='', type='float', timestamp=int(time()), metric_type='g', tags=None):
         self.name = name
         self.value = value
         self.units = units
         self.type = type
         self.timestamp = timestamp
         self.metric_type = metric_type
+        self.tags = tags or []
+
 
 class LogsterParser(object):
     """Base class for logster parsers"""
