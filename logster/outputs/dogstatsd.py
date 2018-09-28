@@ -1,4 +1,5 @@
 from logster.logster_helper import LogsterOutput
+import re
 import socket
 
 
@@ -33,8 +34,10 @@ class DogstatsdOutput(LogsterOutput):
 
             if len(metric.tags) > 0:
                 metric_tags = ','.join(metric.tags)
-                # strip anywhite space
-                metric_tags = ''.join(metric_tags.split())
+
+                # chek for whitespace
+                if re.search(r'\s', metric_tags):
+                    raise RuntimeError('tags contain white space')
                 self.logger.debug("Dogstatsd tags: {}".format(metric_tags))
                 metric_tags = '|#' + metric_tags
 
