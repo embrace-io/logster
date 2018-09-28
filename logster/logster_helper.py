@@ -31,11 +31,7 @@ class MetricObject(object):
         self.type = type
         self.timestamp = timestamp
         self.metric_type = metric_type
-
-        if tags is None:
-            self.tags = []
-        else:
-            self.tags = tags
+        self.tags = tags or []
 
 
 class LogsterParser(object):
