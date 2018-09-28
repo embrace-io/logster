@@ -33,11 +33,14 @@ class DogstatsdOutput(LogsterOutput):
             metric_tags = ''
 
             if len(metric.tags) > 0:
+
                 metric_tags = ','.join(metric.tags)
 
                 # chek for whitespace
                 if re.search(r'\s', metric_tags):
-                    raise RuntimeError('tags contain white space')
+                    msg = 'Dogstatsd tags contain white spaces. Aborting'
+                    self.logger.error(msg)
+                    raise RuntimeError(msg)
                 self.logger.debug("Dogstatsd tags: {}".format(metric_tags))
                 metric_tags = '|#' + metric_tags
 
